@@ -1,4 +1,4 @@
-function removeBeer(res, req, next) {
+function removeBeer(req, res, next) {
     next();
 }
 

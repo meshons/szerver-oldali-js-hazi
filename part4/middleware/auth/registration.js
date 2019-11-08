@@ -1,4 +1,4 @@
-function registration(res, req, next) {
+function registration(req, res, next) {
     next();
 }
 

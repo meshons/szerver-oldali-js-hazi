@@ -1,4 +1,4 @@
-function editBeer(res, req, next) {
+function editBeer(req, res, next) {
     next();
 }
 

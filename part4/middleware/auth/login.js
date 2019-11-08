@@ -1,4 +1,4 @@
-function login(res, req, next) {
+function login(req, res, next) {
     next();
 }
 

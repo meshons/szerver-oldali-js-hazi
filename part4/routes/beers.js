@@ -7,7 +7,7 @@ router.use(auth.checkLogin);
 
 router.get('/beers', beer.listBeers);
 router.get('/beers', function(req, res, next) {
-    res.render('mybeers.ejs', { title: 'Express' });
+    res.render('mybeers.ejs', { beers: res.locals.beers, user: res.locals.user });
 });
 
 router.get('/beer/add', function(req, res, next) {
@@ -20,17 +20,18 @@ router.post('/beer/add', function (req, res, next) {
    res.redirect('/beers');
 });
 
-router.get('/beer/modify', function(req, res, next) {
-    res.render('beer/modify.ejs', { title: 'Express' });
+router.get('/beer/modify/:id', beer.showBeer);
+router.get('/beer/modify/:id', function(req, res, next) {
+    res.render('beer/modify.ejs', { beer: res.locals.beer });
 });
 
-router.post('/beer/modify', beer.editBeer);
-router.post('/beer/modify', function (req, res, next) {
+router.post('/beer/modify/:id', beer.editBeer);
+router.post('/beer/modify/:id', function (req, res, next) {
     res.redirect('/beers');
 });
 
-router.post('/beer/remove', beer.removeBeer);
-router.post('/beer/remove', function (req, res, next) {
+router.get('/beer/remove/:id', beer.removeBeer);
+router.get('/beer/remove/:id', function (req, res, next) {
     res.redirect('/beers');
 });
 

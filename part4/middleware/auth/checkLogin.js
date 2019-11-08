@@ -1,4 +1,5 @@
-function checkLogin(res, req, next) {
+function checkLogin(req, res, next) {
+    res.locals.user = "dump user";
     next();
 }
 
