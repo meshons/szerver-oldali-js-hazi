@@ -3,19 +3,42 @@
     <div class="row justify-content-center">
         <div class="col-auto mt-5 app-login pb-4">
             <h3 class="mt-3 text-center">Add a beer! But don't lie about it.</h3>
-            <form method="post" action="/beer/modify/<%= beer.id %>">
-                <h4>You drunk that at <%= beer.when %>.</h4>
+            <form method="post" action="/beer/modify/<%= beer._id %>">
+                <h4>You drunk that at <%= beer.when.toISOString().split('T')[0] %>.</h4>
+                <% if (typeof placeEmpty != 'undefined') { %>
+                    <div class="alert alert-danger" role="alert">
+                        Place can't be empty
+                    </div>
+                <% } %>
                 <div class="form-group">
                     <label for="where">Where?</label>
-                    <input type="text" class="form-control" id="where" placeholder="Enter the name of the place" value="<%= beer.where %>" required>
+                    <input type="text" class="form-control" name="where" id="where"
+                           placeholder="Enter the name of the place" value="<%= beer.where %>" required>
                 </div>
+                <% if (typeof beerEmpty != 'undefined') { %>
+                    <div class="alert alert-danger" role="alert">
+                        Beer can't be empty
+                    </div>
+                <% } %>
                 <div class="form-group">
                     <label for="what">What?</label>
-                    <input type="text" class="form-control" id="what" placeholder="Enter type of beer it was" value="<%= beer.what %>" required>
+                    <input type="text" class="form-control" name="what" id="what"
+                           placeholder="Enter type of beer it was" value="<%= beer.what %>" required>
                 </div>
+                <% if (typeof literEmpty != 'undefined') { %>
+                    <div class="alert alert-danger" role="alert">
+                        Liter can't be empty
+                    </div>
+                <% } %>
+                <% if (typeof literEmpty == 'undefined' && typeof literIsNotFloat != 'undefined') { %>
+                    <div class="alert alert-danger" role="alert">
+                        Liter is not float
+                    </div>
+                <% } %>
                 <div class="form-group">
                     <label for="liter">How many liter?</label>
-                    <input type="number" class="form-control" id="liter" placeholder="Under half liter it was'nt a beer" value="<%= beer.liter %>" required>
+                    <input type="number" class="form-control" name="liter" id="liter" step="0.1"
+                           placeholder="Under half liter it was'nt a beer" value="<%= beer.liter %>" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Modify this beer!!</button>
                 <a href="/beers"><button type="button" class="mt-3 btn btn-light btn-lg btn-block">Cancel</button></a>

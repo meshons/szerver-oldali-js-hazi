@@ -12,13 +12,18 @@ let indexRouter = require('./routes/index');
 let authRouter = require('./routes/auth');
 let beersRouter = require('./routes/beers');
 
+let mongoose = require('mongoose');
+
+const dotenv = require('dotenv');
+dotenv.config();
+
 let app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
@@ -31,11 +36,19 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'super secret secret text',
-  resave: true,
+  key: "user_sid",
+  secret: 'supersecretrandom',
+  resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { expires: 60000 }
 }));
+
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+    res.clearCookie('user_sid');
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/', authRouter);
@@ -56,5 +69,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+mongoose.connect(process.env.DATABASE_URL, {
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useFindAndModify: false
+}).then(() => console.log('DB Connected!'))
+    .catch(err => {
+      console.log(`DB Connection Error: ${err.message}`);
+    });
 
 module.exports = app;

@@ -1,12 +1,13 @@
+let { Beer } = require("../../database/db");
+
+
 function showBeer(req, res, next) {
-    res.locals.beer = {
-        id: "tesztId1",
-        when: "2019.11.08.",
-        where: "Budapest",
-        what: "Soproni IPA",
-        liter: "0.5"
-    };
-    next();
+    Beer.findById(req.params.id,
+        function (err, beer) {
+            res.locals.beer = beer;
+            next();
+        }
+    );
 }
 
 module.exports = showBeer;
