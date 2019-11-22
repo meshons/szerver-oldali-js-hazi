@@ -16,3 +16,11 @@ part4/.idea/
 part4/bin/
 
 part4/node_modules/
+
+part5/.idea/
+
+part5/bin/
+
+part5/node_modules/
+
+*.zip
