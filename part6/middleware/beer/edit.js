@@ -1,8 +1,7 @@
-let { User, Beer } = require("../../database/db");
+let { Beer } = require("../../database/db");
 const {validationResult} = require('express-validator');
-const url = require("url");
 
-function addBeer(req, res, next) {
+function editBeer(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -20,19 +19,17 @@ function addBeer(req, res, next) {
         return;
     }
 
-    User.findOne({username: req.session.user }).then(
-        function (user) {
-            Beer.create({
-                when: Date.now(),
+    Beer.findByIdAndUpdate(req.params.id,{
+            $set: {
                 where: req.body.where,
                 what: req.body.what,
-                liter: req.body.liter,
-                user: user
-            }, function (err, data) {
-                next();
-            });
+                liter: req.body.liter
+            }
+        }, { new: true } ,
+        function (err, beer) {
+            next();
         }
     );
 }
 
-module.exports = addBeer;
+module.exports = editBeer;

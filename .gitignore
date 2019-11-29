@@ -24,3 +24,6 @@ part5/bin/
 part5/node_modules/
 
 *.zip
+part6/.idea/
+
+part6/node_modules/
