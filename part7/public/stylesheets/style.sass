@@ -1,0 +1,27 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss"
+
+@font-face
+  font-family: "Carnevalee Freakshow local"
+  src: url(../fonts/CarnevaleeFreakshow.ttf)
+
+body
+  padding: 0
+  margin: 0
+  background-image: url("../images/background-pattern.jpg")
+  background-repeat: repeat
+  background-position: center
+
+.app-login
+  background-color: #fac147
+  border-radius: 2rem
+  border: #282828 0.2rem solid
+
+  .app-title
+    font-family: "Carnevalee Freakshow", "Carnevalee Freakshow local", serif
+    @include media-breakpoint-up(md)
+      font-size: 6rem
+
+    @include media-breakpoint-down(md)
+      font-size: 3rem
+
+
