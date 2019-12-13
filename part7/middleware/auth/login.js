@@ -31,11 +31,9 @@ function login(req, res, next) {
             res.redirect('/login');
         } else {
             req.session.user = username;
+            next();
         }
-        next();
     });
-
-
 }
 
 module.exports = login;
